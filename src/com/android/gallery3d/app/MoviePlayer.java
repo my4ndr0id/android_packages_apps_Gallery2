@@ -204,6 +204,7 @@ public class MoviePlayer implements
     public void onPause() {
         mHasPaused = true;
         mHandler.removeCallbacksAndMessages(null);
+        if(!((mUri.toString()).endsWith(".m3u8")))
         mVideoPosition = mVideoView.getCurrentPosition();
         mBookmarker.setBookmark(mUri, mVideoPosition, mVideoView.getDuration());
         mVideoView.suspend();
