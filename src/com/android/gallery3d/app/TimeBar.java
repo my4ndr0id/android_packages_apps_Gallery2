@@ -42,7 +42,7 @@ public class TimeBar extends View {
   }
 
   // Padding around the scrubber to increase its touch target
-  private static final int SCRUBBER_PADDING_IN_DP = 10;
+  private static final int SCRUBBER_PADDING_IN_DP = 80;
 
   // The total padding, top plus bottom
   private static final int V_PADDING_IN_DP = 30;
