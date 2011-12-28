@@ -16,21 +16,25 @@
 
 package com.android.gallery3d.app;
 
-import com.android.gallery3d.R;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Video.VideoColumns;
+import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ShareActionProvider;
+
+import com.android.gallery3d.R;
 
 /**
  * This activity plays a video from a specified URI.
@@ -41,6 +45,7 @@ public class MovieActivity extends Activity {
 
     private MoviePlayer mPlayer;
     private boolean mFinishOnCompletion;
+    private Uri mUri;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,10 +89,11 @@ public class MovieActivity extends Activity {
         actionBar.setDisplayOptions(ActionBar.DISPLAY_HOME_AS_UP,
                 ActionBar.DISPLAY_HOME_AS_UP);
         String title = intent.getStringExtra(Intent.EXTRA_TITLE);
+        mUri = intent.getData();
         if (title == null) {
             Cursor cursor = null;
             try {
-                cursor = getContentResolver().query(intent.getData(),
+                cursor = getContentResolver().query(mUri,
                         new String[] {VideoColumns.TITLE}, null, null, null);
                 if (cursor != null && cursor.moveToNext()) {
                     title = cursor.getString(0);
@@ -99,6 +105,23 @@ public class MovieActivity extends Activity {
             }
         }
         if (title != null) actionBar.setTitle(title);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+
+        getMenuInflater().inflate(R.menu.movie, menu);
+        ShareActionProvider provider = GalleryActionBar.initializeShareActionProvider(menu);
+
+        if (provider != null) {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("video/*");
+            intent.putExtra(Intent.EXTRA_STREAM, mUri);
+            provider.setShareIntent(intent);
+        }
+
+        return true;
     }
 
     @Override
@@ -147,5 +170,17 @@ public class MovieActivity extends Activity {
     public void onDestroy() {
         mPlayer.onDestroy();
         super.onDestroy();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return mPlayer.onKeyDown(keyCode, event)
+                || super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        return mPlayer.onKeyUp(keyCode, event)
+                || super.onKeyUp(keyCode, event);
     }
 }
