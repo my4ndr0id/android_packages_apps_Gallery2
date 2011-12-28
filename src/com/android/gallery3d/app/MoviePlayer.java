@@ -398,7 +398,10 @@ public class MoviePlayer implements
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (mVideoView.isPlaying()) pauseVideo();
+            if (mVideoView.isPlaying()){
+                 pauseVideo();
+                 mController.showPaused();
+            }
         }
     }
 }
