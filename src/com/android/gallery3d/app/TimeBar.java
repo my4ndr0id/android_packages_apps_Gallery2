@@ -143,6 +143,10 @@ public class TimeBar extends View {
     }
     this.currentTime = currentTime;
     this.totalTime = totalTime;
+    if(totalTime <= 0)
+        setShowScrubber(false);
+    else
+        setShowScrubber(true);
     update();
   }
 
