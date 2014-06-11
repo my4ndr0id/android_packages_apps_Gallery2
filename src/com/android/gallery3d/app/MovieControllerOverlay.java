@@ -358,11 +358,7 @@ public class MovieControllerOverlay extends FrameLayout implements
       return;
     }
     background.setVisibility(View.VISIBLE);
-    if(state == State.PLAYING)
-       timeBar.setVisibility(View.VISIBLE);
-    else
-       timeBar.setVisibility(View.INVISIBLE);
-
+    timeBar.setVisibility(View.VISIBLE);
     playPauseReplayView.setImageResource(
         state == State.PAUSED ? R.drawable.ic_vidcontrol_play :
           state == State.PLAYING ? R.drawable.ic_vidcontrol_pause :

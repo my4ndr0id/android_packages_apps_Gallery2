@@ -33,7 +33,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ShareActionProvider;
-import android.util.Log;
 
 import com.android.gallery3d.R;
 
@@ -105,12 +104,7 @@ public class MovieActivity extends Activity {
                 if (cursor != null) cursor.close();
             }
         }
-        if (title != null) {
-            actionBar.setTitle(title);
-            Log.i("MovieActivity", "VIDEOFILENAME - " + title);
-        } else {
-            Log.i("MovieActivity", "VIDEOFILENAME - " + mUri.toString());
-        }
+        if (title != null) actionBar.setTitle(title);
     }
 
     @Override

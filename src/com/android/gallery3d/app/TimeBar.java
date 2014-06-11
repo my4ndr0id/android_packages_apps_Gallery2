@@ -42,7 +42,7 @@ public class TimeBar extends View {
   }
 
   // Padding around the scrubber to increase its touch target
-  private static final int SCRUBBER_PADDING_IN_DP = 80;
+  private static final int SCRUBBER_PADDING_IN_DP = 10;
 
   // The total padding, top plus bottom
   private static final int V_PADDING_IN_DP = 30;
@@ -143,10 +143,6 @@ public class TimeBar extends View {
     }
     this.currentTime = currentTime;
     this.totalTime = totalTime;
-    if(totalTime <= 0)
-        setShowScrubber(false);
-    else
-        setShowScrubber(true);
     update();
   }
 
